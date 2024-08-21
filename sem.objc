@@ -1,0 +1,151 @@
+#import <Foundation/Foundation.h>
+
+@interface Figure : NSObject
+
+- (double)calculateArea;
+- (double)calculatePerimeter;
+- (void)printInfo;
+
+@end
+
+
+### Figure.m:
+
+#import "Figure.h"
+
+@implementation Figure
+
+- (double)calculateArea {
+    return 0.0;
+}
+
+- (double)calculatePerimeter {
+    return 0.0;
+}
+
+- (void)printInfo {
+    NSLog(@"Figure");
+}
+
+@end
+
+### Rectangle.h:
+#import "Figure.h"
+
+@interface Rectangle : Figure
+
+@property (nonatomic, assign) double width;
+@property (nonatomic, assign) double height;
+
+@end
+
+### Rectangle.m:
+
+#import "Rectangle.h"
+
+@implementation Rectangle
+
+- (double)calculateArea {
+    return self.width * self.height;
+}
+
+- (double)calculatePerimeter {
+    return 2 * (self.width + self.height);
+}
+
+- (void)printInfo {
+    NSLog(@"Rectangle - Area: %f, Perimeter: %f", [self calculateArea], [self calculatePerimeter]);
+}
+
+@end
+
+### Circle.h:
+
+#import "Figure.h"
+
+@interface Circle : Figure
+
+@property (nonatomic, assign) double radius;
+
+@end
+
+### Circle.m:
+
+#import "Circle.h"
+
+@implementation Circle
+
+- (double)calculateArea {
+    return M_PI * self.radius * self.radius;
+}
+
+- (double)calculatePerimeter {
+    return 2 * M_PI * self.radius;
+}
+
+- (void)printInfo {
+    NSLog(@"Circle - Area: %f, Perimeter: %f", [self calculateArea], [self calculatePerimeter]);
+}
+
+@end
+
+### Triangle.h:
+
+#import "Figure.h"
+
+@interface Triangle : Figure
+
+@property (nonatomic, assign) double sideA;
+@property (nonatomic, assign) double sideB;
+@property (nonatomic, assign) double sideC;
+
+@end
+
+### Triangle.m:
+
+#import "Triangle.h"
+
+@implementation Triangle
+
+- (double)calculateArea {
+    // Используем формулу Герона для вычисления площади треугольника
+    double s = (self.sideA + self.sideB + self.sideC) / 2.0;
+    return sqrt(s * (s - self.sideA) * (s - self.sideB) * (s - self.sideC));
+}
+
+- (double)calculatePerimeter {
+    return self.sideA + self.sideB + self.sideC;
+}
+
+- (void)printInfo {
+    NSLog(@"Triangle - Area: %f, Perimeter: %f", [self calculateArea], [self calculatePerimeter]);
+}
+
+@end
+
+### В main.m:
+
+#import <Foundation/Foundation.h>
+#import "Rectangle.h"
+#import "Circle.h"
+#import "Triangle.h"
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        Rectangle *rectangle = [[Rectangle alloc] init];
+        rectangle.width = 5.0;
+        rectangle.height = 3.0;
+        [rectangle printInfo];
+        
+        Circle *circle = [[Circle alloc] init];
+        circle.radius = 4.0;
+        [circle printInfo];
+        
+        Triangle *triangle = [[Triangle alloc] init];
+        triangle.sideA = 3.0;
+        triangle.sideB = 4.0;
+        triangle.sideC = 5.0;
+        [triangle printInfo];
+    }
+    return 0;
+}
